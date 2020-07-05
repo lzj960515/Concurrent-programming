@@ -1,7 +1,7 @@
 package com.my.juc.test.volatiletest;
 
 /**
- * 测试指令重排
+ * 测试指令重排 (该测试存在问题)
  *
  * @author Zijian Liao
  * @since 1.0
@@ -19,8 +19,7 @@ public class ReOrderTest {
             count++;
             a = b = x = y = 0;
             Thread t1 = new Thread(() -> {
-                //由于线程1先执行，等一会线程2
-                nanosWait(50000);
+                nanosWait(50000);//由于线程1先执行，等一会线程2
                 a = 1;
                 x = b;
             });
