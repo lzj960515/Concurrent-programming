@@ -8,9 +8,9 @@ package com.my.juc.test.volatiletest;
  */
 public class ReOrderTest {
 
-    public
-    volatile //不加volatile则将出现x=0,y=0的情况
-    static int a = 0, b = 0;
+//    public
+//    volatile //不加volatile则将出现x=0,y=0的情况
+    public static int a = 0, b = 0;
     public static int x = 0, y = 0;
 
     public static void main(String[] args) throws InterruptedException {
@@ -19,11 +19,12 @@ public class ReOrderTest {
             count++;
             a = b = x = y = 0;
             Thread t1 = new Thread(() -> {
-                nanosWait(50000);//由于线程1先执行，等一会线程2
+                nanosWait(100000);//由于线程1先执行，等一会线程2
                 a = 1;
                 x = b;
             });
             Thread t2 = new Thread(() -> {
+                nanosWait(100000);
                 b = 1;
                 y = a;
             });

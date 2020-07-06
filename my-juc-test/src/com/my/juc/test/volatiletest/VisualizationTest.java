@@ -21,9 +21,9 @@ public class VisualizationTest {
         new Thread(() -> {
             System.out.println(name + " 启动中......");
             while (flag) {
-                /*lock.lock(); //加锁，使得发生上下文切换,将变量重新从主内存读取
+                /*lock.lock(); //加锁
                 lock.unlock();*/
-//                synchronized (VisualizationTest.class){}
+//                synchronized (VisualizationTest.class){} //synchronized 加锁时会清空工作内存中的数据，解锁时会将工作内存的数据刷回组内存
                 for (int i = 0; i < 1000000; i++) {
                     new User();
                 }
