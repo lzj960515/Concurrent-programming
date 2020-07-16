@@ -47,8 +47,8 @@ public class InterruptedLockTest {
     }
 
     public static void testInterrupted() throws InterruptedException {
-        LOCK.lockInterruptibly();
-//        LOCK.lock();
+//        LOCK.lockInterruptibly();
+        LOCK.lock();
         System.out.println(Thread.currentThread().getName() + "加锁成功");
         long startTime = System.currentTimeMillis();
         long endTime = System.currentTimeMillis();
