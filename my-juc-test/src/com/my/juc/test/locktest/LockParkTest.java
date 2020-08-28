@@ -18,9 +18,17 @@ public class LockParkTest {
 
     public void testLockSupport(){
         Thread t1 = new Thread(()->{
-            System.out.println("中断线程");
-            LockSupport.park(this);
-            System.out.println("中断已停止，线程状态是否为中断"+Thread.interrupted());
+            System.out.println("park线程");
+            LockSupport.park();
+            System.out.println("park已停止，线程状态是否为中断"+Thread.currentThread().isInterrupted());
+            System.out.println("再次park");
+            LockSupport.park();
+            System.out.println("park失败了");
+            System.out.println("清理线程中断状态");
+            Thread.interrupted();
+            System.out.println("再次park");
+            LockSupport.park();//此时将park成功
+            System.out.println("park失败了");//这行不会打印
         },"线程1");
         t1.start();
         try {

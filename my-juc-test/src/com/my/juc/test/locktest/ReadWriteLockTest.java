@@ -1,5 +1,6 @@
 package com.my.juc.test.locktest;
 
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
@@ -11,17 +12,24 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
  */
 public class ReadWriteLockTest {
     public static ReentrantReadWriteLock reentrantReadWriteLock = new ReentrantReadWriteLock();
-
+    public static CountDownLatch countDownLatch = new CountDownLatch(1);
     public static void main(String[] args) throws InterruptedException {
-//        for (int i = 0; i < 10; i++) {
-            TimeUnit.SECONDS.sleep(1);
+
+        for (int i = 0; i < 10; i++) {
             new Thread(ReadWriteLockTest::testReadLock,"Thread-"+1).start();
-            new Thread(ReadWriteLockTest::testWriteLock,"Thread-"+2).start();
-            TimeUnit.SECONDS.sleep(1);
-//        }
+//            new Thread(ReadWriteLockTest::testWriteLock,"Thread-"+2).start();
+
+        }
+        TimeUnit.SECONDS.sleep(1);
+        countDownLatch.countDown();
     }
 
     public static void testReadLock() {
+        try {
+            countDownLatch.await();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         reentrantReadWriteLock.readLock().lock();
         try {
             System.out.println(Thread.currentThread().getName() + " 得到了读锁");

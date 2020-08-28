@@ -26,8 +26,10 @@ public class ReentrantLockTest {
             TimeUnit.SECONDS.sleep(3);
         } catch (InterruptedException e) {
             e.printStackTrace();
+        }finally {
+            System.out.println(Thread.currentThread().getName() + " 准备释放锁");
+            LOCK.unlock();
         }
-        System.out.println(Thread.currentThread().getName() + " 准备释放锁");
-        LOCK.unlock();
+
     }
 }
